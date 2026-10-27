@@ -5,7 +5,12 @@
  *          - Clicking a course is a SOFT navigation → @modal/(.)[id] intercepts it
  *            and shows a modal over this list. The URL still changes to /courses/<id>.
  *          - Refresh on that URL (HARD navigation) → the full courses/[id] page.
+ *
+ * GOTCHA: interception is checked BEFORE route priority. A <Link> from this
+ * page to /courses/new would be caught by @modal/(.)[id] (with id = "new").
+ * So the route-priority links below are plain <a> tags (hard navigation).
  */
+/* eslint-disable @next/next/no-html-link-for-pages -- hard navigation on purpose (see GOTCHA) */
 import Form from "next/form";
 import Link from "next/link";
 import { getCourses } from "@/lib/api";
@@ -37,10 +42,11 @@ export default async function CoursesPage({
         </p>
       )}
       <Observe>
-        Click a course → modal (intercepted). Then press F5 → full page. Route priority:{" "}
-        <Link href="/courses/new" className="link">/courses/new</Link> (static) ·{" "}
-        <Link href="/courses/999" className="link">/courses/999</Link> (dynamic, 404) ·{" "}
-        <Link href="/courses/5/students" className="link">/courses/5/students</Link> (catch-all).
+        Click a course → a modal opens over the list. Then press F5 → full page. Route priority
+        (plain &lt;a&gt; links, see the GOTCHA comment):{" "}
+        <a href="/courses/new" className="link">/courses/new</a> (static) ·{" "}
+        <a href="/courses/999" className="link">/courses/999</a> (dynamic, 404) ·{" "}
+        <a href="/courses/5/students" className="link">/courses/5/students</a> (catch-all).
       </Observe>
 
       <Form action="/courses" className="mb-3 flex gap-2">
@@ -60,7 +66,7 @@ export default async function CoursesPage({
           </li>
         ))}
       </ul>
-      <Link href="/courses/new" className="btn mt-4">+ New course (admin)</Link>
+      <a href="/courses/new" className="btn mt-4">+ New course (admin)</a>
     </>
   );
 }
