@@ -9,8 +9,12 @@ Every page also shows a yellow tag with the file that rendered it.
 ```bash
 cp .env.example .env.local   # API_URL=http://localhost:3000 (server-only, no NEXT_PUBLIC_)
 npm install
-npm run dev                  # http://localhost:3001
+npm run dev                  # http://localhost:3001 (5001 if 3001 is in use)
 ```
+
+`npm run dev` / `npm start` go through `scripts/run.mjs`. It picks 3001, or 5001 if 3001
+is taken. If a backend answers on port 5000 (the backend's fallback), it sets `API_URL` to it.
+An `API_URL` set in your shell always wins.
 
 The backend must be running on port 3000 (see the root README).
 

@@ -45,17 +45,24 @@ npm run dev
 
 Open **http://localhost:3001**. The home page lists every demo in slide order.
 
+**Ports already in use?** (e.g. an old server is still running)
+- The backend tries **3000**, then falls back to **5000**.
+- The frontend tries **3001**, then falls back to **5001**. If a backend is running on 5000,
+  it uses that one automatically. Start the backend first.
+- Each terminal prints the port it actually uses. To free the ports instead, find the old
+  process with `netstat -ano | findstr :3000` and stop it with `taskkill /PID <pid> /F`.
+
 ## Useful commands
 
 | Where       | Command              | What it does                          |
 |-------------|----------------------|---------------------------------------|
-| `Backend/`  | `npm run start:dev`  | Start the API with auto-reload         |
+| `Backend/`  | `npm run start:dev`  | Start the API with auto-reload on 3000 (or 5000) |
 | `Backend/`  | `npm run build`      | Compile to `dist/`                     |
 | `Backend/`  | `npm run start:prod` | Run the compiled API (`node dist/main`) |
 | `Backend/`  | `npm run seed`       | Reset the demo courses and users       |
-| `frontend/` | `npm run dev`        | Start the dev server on port 3001      |
+| `frontend/` | `npm run dev`        | Start the dev server on 3001 (or 5001) |
 | `frontend/` | `npm run build`      | Production build                       |
-| `frontend/` | `npm start`          | Serve the production build on 3001     |
+| `frontend/` | `npm start`          | Serve the production build on 3001 (or 5001) |
 | `frontend/` | `npm run lint`       | Run ESLint                             |
 
 ## Demo login credentials
