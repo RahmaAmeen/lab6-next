@@ -44,7 +44,7 @@ export class StudentController {
   }
 
   @Roles(Role.User)
-  @UseGuards(authorizationGaurd)
+  @UseGuards(AuthGuard, authorizationGaurd) // AuthGuard first so request.user exists
   @Get(':id') // /student/:id
   // Get a single student by ID
   async getStudentById(@Param('id') id: string): Promise<student | null> {

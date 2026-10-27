@@ -8,7 +8,7 @@ export class student {
   @Prop({ required: true })
   email: string;
 
-  @Prop({ required: true, default: 'admin' })
+  @Prop({ required: true, default: 'student' })
   role: string;
 
   @Prop({ required: true })

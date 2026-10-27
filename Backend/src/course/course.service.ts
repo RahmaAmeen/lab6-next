@@ -19,6 +19,7 @@ export class CourseService {
     return courses;
   }
   async findById(id: string): Promise<course | null> {
+    if (!mongoose.isValidObjectId(id)) return null; // e.g. "999" → 404 instead of CastError 500
     return await this.courseModel.findById(id);
   }
   async update(

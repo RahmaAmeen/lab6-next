@@ -23,15 +23,14 @@ export class StudentService {
   }
   // Get all students
   async findAll(): Promise<studentDocument[]> {
-    const students = await this.studentModel.find(); 
-    console.log(students);
+    const students = await this.studentModel.find().select('-password');
     return students;
   }
 
   // Get a student by ID
   async findById(id: string): Promise<studentDocument | null> {
-    console.log(id);
-    const student = await this.studentModel.findById(id); // Fetch a student by ID
+    if (!mongoose.isValidObjectId(id)) return null;
+    const student = await this.studentModel.findById(id).select('-password'); // Fetch a student by ID
     return student;
   }
 

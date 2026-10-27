@@ -23,7 +23,12 @@ export class AuthService {
       throw new ConflictException('email already exists');
     }
     const hashedPassword = await bcrypt.hash(user.password, 10);
-    const newUser: RegisterRequestDto = { ...user, password: hashedPassword };
+    // Public registration always creates a student; admins come from the seed script
+    const newUser: RegisterRequestDto = {
+      ...user,
+      password: hashedPassword,
+      role: 'student',
+    };
     await this.usersService.create(newUser);
     return 'registered successfully';
   }

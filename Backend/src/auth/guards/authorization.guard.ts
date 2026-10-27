@@ -2,6 +2,7 @@ import {
   Injectable,
   CanActivate,
   ExecutionContext,
+  ForbiddenException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
@@ -22,7 +23,7 @@ export class authorizationGaurd implements CanActivate {
     if (!user) throw new UnauthorizedException('no user attached');
     const userRole = user.role;
     if (!requiredRoles.includes(userRole))
-      throw new UnauthorizedException('unauthorized access');
+      throw new ForbiddenException('unauthorized access'); // 403: logged in, wrong role
 
     return true;
   }
